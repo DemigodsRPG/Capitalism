@@ -71,7 +71,7 @@ public class CapitalismPlugin extends CensoredJavaPlugin
 
 	private boolean checkForVault()
 	{
-		// Check for CensoredLib
+		// Check for Vault
 		Plugin check = Bukkit.getPluginManager().getPlugin("Vault");
 		if(check instanceof Vault && check.getDescription().getVersion().startsWith(VAULT_VERSION)) return true;
 		getLogger().severe("Capitalism cannot load without Vault installed.");

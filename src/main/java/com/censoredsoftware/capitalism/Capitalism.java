@@ -17,7 +17,7 @@ public class Capitalism
 
 	// Public Static Access
 	public static final CapitalismPlugin PLUGIN;
-	public static final Economy ECONOMY;
+	public static final Economy ECONOMY; // possible support for FreeMarket economies (for Firm capabilities)
 
 	// Load what is possible to load right away.
 	static
@@ -32,6 +32,15 @@ public class Capitalism
 	{
 		// Start the data
 		SAVE_PATH = PLUGIN.getDataFolder() + "/data/"; // Don't change this.
+
+		// Let admins know
+		if(!PLUGIN.getServer().getOnlineMode())
+		{
+			Messages.severe("Capitalism won't work in offline mode.");
+			Messages.severe("We depend on Mojang's servers for ids.");
+			Messages.severe("Any player who joins and is not premium");
+			Messages.severe("may be kicked from the game.");
+		}
 
 		// Load listeners
 		loadListeners();

@@ -2,6 +2,7 @@ package com.censoredsoftware.capitalism.entity;
 
 import com.censoredsoftware.capitalism.data.DataManager;
 import com.censoredsoftware.capitalism.util.Configs;
+import com.censoredsoftware.censoredlib.helper.MojangIdGrabber;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -13,15 +14,16 @@ import java.util.Map;
 
 public class Person implements ConfigurationSerializable
 {
-	private String player;
+	private String mojangId, playerName;
 	private double balance;
 
 	public Person()
 	{}
 
-	public Person(String player, ConfigurationSection conf)
+	public Person(String mojangId, ConfigurationSection conf)
 	{
-		this.player = player;
+		this.mojangId = mojangId;
+		playerName = conf.getString("playerName");
 		balance = conf.getDouble("balance");
 	}
 
@@ -33,9 +35,14 @@ public class Person implements ConfigurationSerializable
 		return map;
 	}
 
-	void setPlayer(String player)
+	void setPlayer(OfflinePlayer player)
 	{
-		this.player = player;
+		this.mojangId = MojangIdGrabber.getUUID(player);
+	}
+
+	public void setPlayerName(String playerName)
+	{
+		this.playerName = playerName;
 	}
 
 	public void setBalance(double amount)
@@ -46,12 +53,17 @@ public class Person implements ConfigurationSerializable
 
 	public OfflinePlayer getOfflinePlayer()
 	{
-		return Bukkit.getOfflinePlayer(this.player);
+		return Bukkit.getOfflinePlayer(this.playerName);
 	}
 
 	public String getPlayerName()
 	{
-		return player;
+		return playerName;
+	}
+
+	public String getMojangId()
+	{
+		return playerName;
 	}
 
 	public double getBalance()
@@ -65,15 +77,15 @@ public class Person implements ConfigurationSerializable
 		if(getOfflinePlayer().isOnline()) getOfflinePlayer().getPlayer().kickPlayer(ChatColor.RED + "Your player save has been cleared.");
 
 		// Now we clear the Person save itself
-		Util.delete(getPlayerName());
+		Util.delete(mojangId);
 	}
 
 	public static class Util
 	{
-		public static Person create(String playerName)
+		public static Person create(OfflinePlayer player)
 		{
 			Person playerSave = new Person();
-			playerSave.setPlayer(playerName);
+			playerSave.setPlayer(player);
 			playerSave.setBalance(Configs.getSettingDouble("accounts.default_balance"));
 			save(playerSave);
 			return playerSave;
@@ -81,7 +93,7 @@ public class Person implements ConfigurationSerializable
 
 		public static void save(Person player)
 		{
-			DataManager.persons.put(player.getPlayerName(), player);
+			DataManager.persons.put(player.getMojangId(), player);
 		}
 
 		public static void delete(String playerName)

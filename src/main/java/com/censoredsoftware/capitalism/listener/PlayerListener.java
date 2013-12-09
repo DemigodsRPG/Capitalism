@@ -18,7 +18,8 @@ public class PlayerListener implements Listener
 		Person person = Person.Util.getPlayer(player);
 
 		// First join
-		if(person == null) person = Person.Util.create(player.getName());
+		if(person == null) person = Person.Util.create(player);
+		person.setPlayerName(player.getName());
 
 		if(!Configs.getSettingBoolean("accounts.display_on_join")) return;
 
