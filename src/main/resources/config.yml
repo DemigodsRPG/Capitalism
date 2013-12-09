@@ -1,0 +1,11 @@
+currency:
+    plural: 'credits'
+    singular: 'credit'
+
+accounts:
+    use_internal: true
+    display_on_join: true
+    default_balance: 20.0
+
+saving:
+    freq: 300

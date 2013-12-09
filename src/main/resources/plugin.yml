@@ -1,0 +1,9 @@
+name: Capitalism
+main: com.censoredsoftware.capitalism.CapitalismPlugin
+version: ${project.version}
+authors: [_Alex, HmmmQuestionMark]
+softdepend: [CensoredLib, Vault]
+commands:
+  balance:
+    description: Important information.
+    alias: [b, e, econ]
