@@ -17,7 +17,7 @@ public class Capitalism
 
 	// Public Static Access
 	public static final CapitalismPlugin PLUGIN;
-	public static final Economy ECONOMY; // possible support for FreeMarket economies (for Firm capabilities)
+	public static final Economy ECONOMY; // possible support for non-FreeMarket economies (for Firm capabilities)
 
 	// Load what is possible to load right away.
 	static
